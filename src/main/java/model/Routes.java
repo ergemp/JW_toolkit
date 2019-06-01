@@ -1,6 +1,6 @@
 package model;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
+import util.constants.ContentTypes;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,11 +13,11 @@ public class Routes {
         this.routes.add(route);
     }
 
-    public void addRoute(String path, String file, String contentType){
+    public void addRoute(String path, String file, ContentTypes.CONTENT gCONTENT ){
         SingleRouteModel route = new SingleRouteModel();
         route.setRequestPath(path);
         route.setResponseFile(file);
-        route.setResponseContentType(contentType);
+        route.setResponseContentType(gCONTENT);
 
         this.routes.add(route);
     }
@@ -58,7 +58,9 @@ public class Routes {
                 }
             }
             else {
-
+                //return default route for 404
+                Route404 route404 = new Route404();
+                retRoute = route404;
             }
         }
         catch(Exception ex){
@@ -71,7 +73,7 @@ public class Routes {
 
                 retRoute.setRequestPath("404");
                 retRoute.setResponseFile("404.html");
-                retRoute.setResponseContentType("text/html");
+                retRoute.setResponseContentType(ContentTypes.CONTENT.HTML);
             }
             return retRoute;
         }

@@ -1,27 +1,15 @@
 import actor.HTTPRequestHeaderCreator;
 import actor.RoutesFactory;
-import com.sun.xml.internal.xsom.impl.scd.Iterators;
+import actor.responseActors.ResponseActor;
 import config.serverConfig;
-import model.HTTPRequestHeaderModel;
-import model.Routes;
-import model.SingleRouteModel;
-import util.readFileData;
+import model.*;
+import util.ReadFileData;
+import util.constants.StatusTypes;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.StringTokenizer;
 
 public class JavaHTTPServer implements Runnable {
 
@@ -85,6 +73,9 @@ public class JavaHTTPServer implements Runnable {
             HTTPRequestHeaderCreator headerCreator = new HTTPRequestHeaderCreator();
             headerModel = headerCreator.createRequestHeader(in);
 
+            RoutesFactory routesFactory = new RoutesFactory();
+            Routes routes = routesFactory.getRoutes();
+            SingleRouteModel route = routes.getRoute(headerModel.getPath());
 
             // we support only GET and HEAD methods, we check
             if (headerModel == null){
@@ -95,62 +86,15 @@ public class JavaHTTPServer implements Runnable {
             }
 
             if (!headerModel.getMethod().equals("GET")  &&  !headerModel.getMethod().equals("HEAD")) {
-                if (verbose) {
-                    System.out.println("501 Not Implemented : " + headerModel.getMethod() + " method.");
-                }
-
-                // we return the not supported file to the client
-                File file = new File(WEB_ROOT, METHOD_NOT_SUPPORTED);
-                int fileLength = (int) file.length();
-                String contentMimeType = "text/html";
-                //read content to return to client
-                byte[] fileData = readFileData.read(file, fileLength);
-
-                // we send HTTP Headers with data to client
-                out.println("HTTP/1.1 501 Not Implemented");
-                out.println("Server: Java HTTP Server from SSaurel : 1.0");
-                out.println("Date: " + new Date());
-                out.println("Content-type: " + contentMimeType);
-                out.println("Content-length: " + fileLength);
-                out.println(); // blank line between headers and content, very important !
-                out.flush(); // flush character output stream buffer
-                // file
-                dataOut.write(fileData, 0, fileLength);
-                dataOut.flush();
-
+                HTTPResponseModel response = new HTTPResponseModel(StatusTypes.STATUS.NOT_IMPLEMENTED,new Route501());
+                ResponseActor.act(in,out,dataOut,response);
             } else {
                 // GET or HEAD method
-
-                RoutesFactory routesFactory = new RoutesFactory();
-                Routes routes = routesFactory.getRoutes();
-                SingleRouteModel route = null;
-
-                if (routes.containsPath(headerModel.getPath())){
-                    route = routes.getRoute(headerModel.getPath());
-                }
-
-                System.out.println(route.getResponseFile());
-
-                File file = new File(serverConfig.RESOURCES, route.getResponseFile());
-                byte[] fileData = readFileData.read(file, (int)file.length());
+                HTTPResponseModel response = new HTTPResponseModel(StatusTypes.STATUS.OK, route);
+                ResponseActor.act(in,out,dataOut,response);
 
                 if (headerModel.getMethod().equalsIgnoreCase("GET")) { // GET method so we return content
-
-                    // send HTTP Headers
-                    out.println("HTTP/1.1 200 OK");
-                    out.println("Server: Java HTTP Server from SSaurel : 1.0");
-                    out.println("Date: " + new Date());
-                    out.println("Content-type: " + route.getResponseContentType());
-                    out.println("Content-length: " + (int)file.length());
-                    out.println(); // blank line between headers and content, very important !
-                    out.flush(); // flush character output stream buffer
-
-                    dataOut.write(fileData, 0, (int)file.length());
-                    dataOut.flush();
-                }
-
-                if (verbose) {
-                    System.out.println("File " + route.getResponseFile() + " of type " + route.getResponseContentType() + " returned");
+                    ResponseActor.act(in,out,dataOut,response);
                 }
             }
 
@@ -177,15 +121,13 @@ public class JavaHTTPServer implements Runnable {
                 System.out.println("Connection closed.\n");
             }
         }
-
-
     }
 
     private void fileNotFound(PrintWriter out, OutputStream dataOut, String fileRequested) throws IOException {
         File file = new File(WEB_ROOT, FILE_NOT_FOUND);
         int fileLength = (int) file.length();
         String content = "text/html";
-        byte[] fileData = readFileData.read(file, fileLength);
+        byte[] fileData = ReadFileData.read(file, fileLength);
 
         out.println("HTTP/1.1 404 File Not Found");
         out.println("Server: Java HTTP Server from SSaurel : 1.0");

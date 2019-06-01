@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class readFileData {
+public class ReadFileData {
     public static byte[] read(File file, int fileLength) throws IOException {
         FileInputStream fileIn = null;
         byte[] fileData = new byte[fileLength];
@@ -16,7 +16,6 @@ public class readFileData {
             if (fileIn != null)
                 fileIn.close();
         }
-
         return fileData;
     }
 }

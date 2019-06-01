@@ -2,14 +2,15 @@ package actor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Routes;
+import util.constants.ContentTypes;
 
 public class RoutesFactory {
     public Routes getRoutes(){
 
         Routes routes = new Routes();
         try {
-            routes.addRoute("/" , "index.html", "text/html"  );
-            routes.addRoute("/about" , "about.html", "text/html" );
+            routes.addRoute("/" , "index.html", ContentTypes.CONTENT.HTML  );
+            routes.addRoute("/about" , "about.html", ContentTypes.CONTENT.HTML );
         }
         catch (Exception ex){
             ex.printStackTrace();
@@ -17,6 +18,5 @@ public class RoutesFactory {
         finally {
             return routes;
         }
-
     }
 }
