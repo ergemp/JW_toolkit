@@ -12,10 +12,10 @@ import java.net.Socket;
 import java.util.Date;
 import java.util.StringTokenizer;
 
-// The tutorial can be found just here on the SSaurel's Blog : 
+// The tutorial can be found just here on the SSaurel's Blog :
 // https://www.ssaurel.com/blog/create-a-simple-http-web-server-in-java
 // Each Client Connection will be managed in a dedicated Thread
-public class JavaHTTPServerOrg implements Runnable{
+public class SSaurelHTTPServer implements Runnable {
 
     static final File WEB_ROOT = new File(".");
     static final String DEFAULT_FILE = "index.html";
@@ -30,7 +30,7 @@ public class JavaHTTPServerOrg implements Runnable{
     // Client Connection via Socket Class
     private Socket connect;
 
-    public JavaHTTPServerOrg(Socket c) {
+    public SSaurelHTTPServer(Socket c) {
         connect = c;
     }
 
@@ -41,7 +41,7 @@ public class JavaHTTPServerOrg implements Runnable{
 
             // we listen until user halts server execution
             while (true) {
-                JavaHTTPServer myServer = new JavaHTTPServer(serverConnect.accept());
+                SSaurelHTTPServer myServer = new SSaurelHTTPServer(serverConnect.accept());
 
                 if (verbose) {
                     System.out.println("Connecton opened. (" + new Date() + ")");

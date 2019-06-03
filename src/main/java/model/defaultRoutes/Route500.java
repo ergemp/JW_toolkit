@@ -1,10 +1,9 @@
-package model;
+package model.defaultRoutes;
 
-import util.constants.ContentTypes;
+import model.SingleRouteModel;
 
 public class Route500 extends SingleRouteModel {
     public Route500() {
-        setResponseContentType(ContentTypes.CONTENT.HTML);
         setResponseFile("500.html");
         setRequestPath("*");
     }

@@ -1,6 +1,8 @@
 package model;
 
-import util.constants.ContentTypes;
+import config.serverConfig;
+import model.defaultRoutes.Route404;
+import util.constants.Types;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,12 +15,10 @@ public class Routes {
         this.routes.add(route);
     }
 
-    public void addRoute(String path, String file, ContentTypes.CONTENT gCONTENT ){
+    public void addRoute(String path, String file){
         SingleRouteModel route = new SingleRouteModel();
         route.setRequestPath(path);
         route.setResponseFile(file);
-        route.setResponseContentType(gCONTENT);
-
         this.routes.add(route);
     }
 
@@ -65,16 +65,19 @@ public class Routes {
         }
         catch(Exception ex){
             ex.printStackTrace();
-
         }
         finally {
             if (retRoute == null){
-                retRoute = new SingleRouteModel();
-
-                retRoute.setRequestPath("404");
-                retRoute.setResponseFile("404.html");
-                retRoute.setResponseContentType(ContentTypes.CONTENT.HTML);
+                retRoute = new Route404();
             }
+
+            if (serverConfig.DEBUG){
+                System.out.print(" - Selected Route -> ");
+                System.out.print(" - Route Request Path: "  + retRoute.getRequestPath() );
+                System.out.print(" - Route Response File: "  + retRoute.getResponseFile() );
+                System.out.print(" - Route Response File Size: "  + retRoute.getFileSize() + "\n" );
+            }
+
             return retRoute;
         }
     }

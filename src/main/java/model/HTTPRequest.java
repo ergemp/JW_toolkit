@@ -1,7 +1,9 @@
 package model;
 
-public class HTTPRequestHeaderModel {
-    private String method ;
+import util.constants.Types;
+
+public class HTTPRequest {
+    private Types.METHOD method ;
     private String path ;
     private String httpVersion ;
     private String host;
@@ -13,11 +15,11 @@ public class HTTPRequestHeaderModel {
     private String acceptEncoding;
     private String acceptLanguage;
 
-    public String getMethod() {
+    public Types.METHOD getMethod() {
         return method;
     }
 
-    public void setMethod(String method) {
+    public void setMethod(Types.METHOD method) {
         this.method = method;
     }
 

@@ -1,18 +1,17 @@
 package actor;
 
-import model.HTTPRequestHeaderModel;
-
+import model.HTTPRequest;
+import util.MethodMapper;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
-public class HTTPRequestHeaderCreator {
+public class HTTPRequestModelCreator {
 
-    public HTTPRequestHeaderModel createRequestHeader(BufferedReader gIn) {
+    public HTTPRequest createRequestHeader(BufferedReader gIn) {
 
-        HTTPRequestHeaderCreator creator = new HTTPRequestHeaderCreator();
-        HTTPRequestHeaderModel model = new HTTPRequestHeaderModel();
+        HTTPRequestModelCreator creator = new HTTPRequestModelCreator();
+        HTTPRequest model = new HTTPRequest();
 
         try {
             String line = "";
@@ -37,8 +36,8 @@ public class HTTPRequestHeaderCreator {
         }
     }
 
-    public  HTTPRequestHeaderModel createRequestHeader(List<String> gRequest){
-        HTTPRequestHeaderModel model = new HTTPRequestHeaderModel();
+    public HTTPRequest createRequestHeader(List<String> gRequest){
+        HTTPRequest model = new HTTPRequest();
         try {
             if (gRequest != null) {
                 gRequest.forEach(each -> {
@@ -68,9 +67,11 @@ public class HTTPRequestHeaderCreator {
                             model.setAcceptLanguage(each.split(":" )[1].toLowerCase().trim());
                             break;
                         default :
-                            model.setMethod(each.split(" ")[0]);
+                            model.setMethod(new MethodMapper().getMehod(each.split(" ")[0]));
                             model.setPath(each.split(" ")[1]);
-                            model.setHttpVersion(each.split(" ")[2]);
+                            if (!model.getPath().trim().equalsIgnoreCase("prefetch" )) {
+                                model.setHttpVersion(each.split(" ")[2]);
+                            }
                             break;
                     }
                 });
@@ -80,6 +81,12 @@ public class HTTPRequestHeaderCreator {
             ex.printStackTrace();
         }
         finally{
+            if (config.serverConfig.DEBUG){
+                System.out.print(" - Request Method: " +  model.getMethod());
+                System.out.print(" - Request Path: " +  model.getPath());
+                System.out.print(" - Request Host: " +  model.getHost());
+                System.out.print(" - Request HTTP Version: " +  model.getHttpVersion() + "\n" );
+            }
             return model;
         }
     }
