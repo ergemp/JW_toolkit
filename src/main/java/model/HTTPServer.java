@@ -3,6 +3,10 @@ package model;
 import actor.HTTPRequestModelCreator;
 import actor.responseActors.ResponseActor;
 import config.serverConfig;
+import model.defaultRoutes.Route500;
+import model.defaultRoutes.Route501;
+import util.constants.Types;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,7 +17,7 @@ public class HTTPServer implements Runnable {
     private Routes routes;
 
     public HTTPServer(Routes gRoutes){
-        this.routes = gRoutes;
+        routes = gRoutes;
     }
 
     public HTTPServer(Socket gSocket){
@@ -22,12 +26,10 @@ public class HTTPServer implements Runnable {
 
     public void start() {
         try {
-
+            ServerSocket serverConnect = new ServerSocket(serverConfig.PORT);
             if (serverConfig.DEBUG) {
                 System.out.println("Server Starting on Port: " + serverConfig.PORT + "; PID: " + Thread.currentThread().getId());
             }
-
-            ServerSocket serverConnect = new ServerSocket(serverConfig.PORT);
 
             // we listen until user halts server execution
             while (true) {
@@ -35,6 +37,7 @@ public class HTTPServer implements Runnable {
 
                 HTTPServer myServer = new HTTPServer(connect);
                 myServer.routes = this.routes;
+
                 System.out.println(" - Connecton opened. (" + new Date() + ")");
 
                 // create dedicated thread to manage the client connection
@@ -56,6 +59,7 @@ public class HTTPServer implements Runnable {
         BufferedReader in = null;
         PrintWriter out = null;
         BufferedOutputStream dataOut = null;
+        BufferedInputStream dataIn = null;
         HTTPRequest request = null;
 
         try {
@@ -66,6 +70,9 @@ public class HTTPServer implements Runnable {
             // we read characters from the client via input stream on the socket
             in = new BufferedReader(new InputStreamReader(connect.getInputStream()));
 
+            // we read characters from the client via input stream on the socket
+            dataIn = new BufferedInputStream(connect.getInputStream());
+
             // we get character output stream to client (for headers)
             out = new PrintWriter(connect.getOutputStream());
 
@@ -74,10 +81,7 @@ public class HTTPServer implements Runnable {
 
             //create the requestModel
             HTTPRequestModelCreator requestCreator = new HTTPRequestModelCreator();
-            request = requestCreator.createRequestHeader(in);
-
-            //select the requested Route from the Routes
-            SingleRouteModel route = routes.getRoute(request.getPath());
+            request = requestCreator.createRequest(in, dataIn);
 
             if (request == null){
                 return;
@@ -85,6 +89,9 @@ public class HTTPServer implements Runnable {
             else if (request.getMethod() == null) {
                 return;
             }
+
+            //select the requested Route from the Routes
+            SingleRouteModel route = routes.getRoute(request.getPath());
 
             HTTPResponse response = new HTTPResponse(route);
             ResponseActor.act(out, dataOut, response, request);

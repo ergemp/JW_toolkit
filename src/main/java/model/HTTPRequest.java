@@ -14,6 +14,7 @@ public class HTTPRequest {
     private String accept;
     private String acceptEncoding;
     private String acceptLanguage;
+    private String content;
 
     public Types.METHOD getMethod() {
         return method;
@@ -114,5 +115,13 @@ public class HTTPRequest {
 
     public void setHttpVersion(String httpVersion) {
         this.httpVersion = httpVersion;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }
