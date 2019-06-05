@@ -3,7 +3,7 @@ package actor;
 import model.Routes;
 
 public class RoutesFactory {
-    public Routes getRoutes(){
+    public Routes getPredefinedRoutes(){
 
         Routes routes = new Routes();
         try {

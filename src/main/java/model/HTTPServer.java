@@ -63,7 +63,6 @@ public class HTTPServer implements Runnable {
         HTTPRequest request = null;
 
         try {
-
             if (serverConfig.DEBUG){
                 System.out.println(" - Request Handler Thread Started: " + Thread.currentThread().getId());
             }

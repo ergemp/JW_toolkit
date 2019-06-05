@@ -1,5 +1,6 @@
 package model;
 
+import config.serverConfig;
 import util.ContentMapper;
 import util.StatusMapper;
 import util.constants.Types;
@@ -29,9 +30,8 @@ public class HTTPResponse {
         return date;
     }
 
-
     public HTTPResponse(SingleRouteModel gRoute) {
-        this.server = "Server: Simple Java Web Server 1.0";
+        this.server = serverConfig.SERVERNAME;
         this.date = "Date: " + new Date();
         this.route = gRoute;
         this.content = Types.CONTENT.HTML;
@@ -41,19 +41,17 @@ public class HTTPResponse {
     public HTTPResponse(Types.STATUS gStatus, Types.CONTENT gContent, SingleRouteModel gRoute) {
         this.status = gStatus;
         this.content = gContent;
-        this.server = "Server: Simple Java Web Server 1.0";
+        this.content = gContent;
+        this.server = serverConfig.SERVERNAME;
         this.date = "Date: " + new Date();
         this.route = gRoute;
     }
 
-    public Integer getFileSize(){
-        return route.getFileSize();
-    }
-
-    public byte[] getFileData(){
-        return route.getFileData();
-    }
+    public void handle(HTTPRequest request){ route.handle(request);}
+    public Integer getHandleDataLegth(){ return route.getHandleDataLength();}
+    public byte[] getHandleData (){ return route.getHandleData();}
 
     public String getFileName() { return route.getResponseFile(); }
+    public String getHandlerClassName() { return route.getResponseClass().getClass().getName(); }
 }
 

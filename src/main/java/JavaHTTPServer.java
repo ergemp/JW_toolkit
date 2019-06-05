@@ -6,9 +6,10 @@ public class JavaHTTPServer {
     public static void main(String[] args) {
         //generate Routes
         RoutesFactory routesFactory = new RoutesFactory();
-        Routes routes = routesFactory.getRoutes();
+        Routes routes = routesFactory.getPredefinedRoutes();
 
-        //HTTPServer server = new HTTPServer(routes);
+        routes.addRoute("/handler" , new customHandler());
+
         HTTPServer httpServer = new HTTPServer(routes);
         httpServer.start();
     }

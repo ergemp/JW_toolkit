@@ -1,6 +1,5 @@
 package actor;
 
-import config.serverConfig;
 import model.HTTPRequest;
 import util.MethodMapper;
 import util.constants.Types;
@@ -33,11 +32,18 @@ public class HTTPRequestModelCreator {
                 clientRequestHeaderArr.add(line);
             }
 
-            StringBuilder payload = new StringBuilder();
-            while(gIn.ready()){
-                payload.append((char) gIn.read());
+            createRequestHeader();
+
+            if (model.getMethod() != null) {
+                if (!(model.getMethod().equals(Types.METHOD.GET) ||
+                        model.getMethod().equals(Types.METHOD.HEAD))) {
+                    StringBuilder payload = new StringBuilder();
+                    while (gIn.ready()) {
+                        payload.append((char) gIn.read());
+                    }
+                    model.setContent(payload.toString());
+                }
             }
-            model.setContent(payload.toString());
         }
         catch(Exception ex) {
             ex.printStackTrace();
@@ -98,12 +104,14 @@ public class HTTPRequestModelCreator {
         }
         finally{
             if (config.serverConfig.DEBUG){
-                System.out.println(" - Request Raw: " +  clientRequestHeaderArr.toString());
-                System.out.print(" - Request Method: " +  model.getMethod());
-                System.out.print(" - Request Path: " +  model.getPath());
-                System.out.print(" - Request Host: " +  model.getHost());
-                System.out.print(" - Request HTTP Version: " +  model.getHttpVersion() + "\n" );
-                System.out.print(" - Request Content: " +  model.getContent() + "\n" );
+                if (model.getMethod() != null) {
+                    System.out.println(" - Request Raw: " + clientRequestHeaderArr.toString());
+                    System.out.print(" - Request Method: " + model.getMethod());
+                    System.out.print(" - Request Path: " + model.getPath());
+                    System.out.print(" - Request Host: " + model.getHost());
+                    System.out.print(" - Request HTTP Version: " + model.getHttpVersion() + "\n");
+                    System.out.print(" - Request Content: " + model.getContent() + "\n");
+                }
             }
         }
     }

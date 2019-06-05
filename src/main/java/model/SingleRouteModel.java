@@ -7,6 +7,10 @@ import java.io.File;
 public class SingleRouteModel {
     private String requestPath;
     private String responseFile;
+    private Handler responseClass;
+
+    private byte[] handleData;
+    private Integer handleDataLength;
 
     public String getRequestPath() {
         return requestPath;
@@ -39,9 +43,16 @@ public class SingleRouteModel {
     }
 
     public byte[] getFileData(){
+
         byte[] retVal = null;
+
         try{
-            retVal = ReadFileData.read(new File(serverConfig.RESOURCES,this.getResponseFile()), getFileSize());
+            if (responseFile != null) {
+                retVal = ReadFileData.read(new File(serverConfig.RESOURCES, this.getResponseFile()), getFileSize());
+            }
+            else {
+                retVal = "no data".getBytes();
+            }
         }
         catch(Exception ex){
 
@@ -49,5 +60,52 @@ public class SingleRouteModel {
         finally{
             return retVal;
         }
+    }
+
+    public void handle(HTTPRequest request){
+        try{
+            if (responseClass != null) {
+                setHandleData(responseClass.handle(request));
+                setHandleDataLength(getHandleData().length);
+            }
+            else if (responseFile != null) {
+                File tmpFile = new File(serverConfig.RESOURCES, this.getResponseFile());
+                setHandleDataLength((int) tmpFile.length());
+                setHandleData(ReadFileData.read(tmpFile, getHandleDataLength()));
+            }
+            else {
+                setHandleData("no data".getBytes());
+                setHandleDataLength(0);
+            }
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
+        finally{
+        }
+    }
+
+    public Handler getResponseClass() {
+        return responseClass;
+    }
+
+    public void setResponseClass(Handler responseClass) {
+        this.responseClass = responseClass;
+    }
+
+    public byte[] getHandleData() {
+        return handleData;
+    }
+
+    public void setHandleData(byte[] handleData) {
+        this.handleData = handleData;
+    }
+
+    public Integer getHandleDataLength() {
+        return handleDataLength;
+    }
+
+    public void setHandleDataLength(Integer handleDataLength) {
+        this.handleDataLength = handleDataLength;
     }
 }

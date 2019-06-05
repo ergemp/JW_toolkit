@@ -22,6 +22,13 @@ public class Routes {
         this.routes.add(route);
     }
 
+    public void addRoute(String path, Handler gHandler){
+        SingleRouteModel route = new SingleRouteModel();
+        route.setRequestPath(path);
+        route.setResponseClass(gHandler);
+        this.routes.add(route);
+    }
+
     public Boolean containsPath(String path){
         Boolean exists = false;
         try {
