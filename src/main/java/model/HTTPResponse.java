@@ -17,9 +17,15 @@ public class HTTPResponse {
     public String getStatus() {
         return new StatusMapper().getStatus(status);
     }
+    public void setStatus(Types.STATUS gStatus) {
+        status=gStatus;
+    }
 
     public String getContentType() {
         return new ContentMapper().getContent(content);
+    }
+    public void setContent(Types.CONTENT gContent) {
+        content=gContent;
     }
 
     public String getServer() {
@@ -47,7 +53,7 @@ public class HTTPResponse {
         this.route = gRoute;
     }
 
-    public void handle(HTTPRequest request){ route.handle(request);}
+    public void handle(HTTPRequest request){ route.handle(request, this);}
     public Integer getHandleDataLegth(){ return route.getHandleDataLength();}
     public byte[] getHandleData (){ return route.getHandleData();}
 

@@ -62,10 +62,10 @@ public class SingleRouteModel {
         }
     }
 
-    public void handle(HTTPRequest request){
+    public void handle(HTTPRequest request, HTTPResponse response){
         try{
             if (responseClass != null) {
-                setHandleData(responseClass.handle(request));
+                setHandleData(responseClass.handle(request, response));
                 setHandleDataLength(getHandleData().length);
             }
             else if (responseFile != null) {

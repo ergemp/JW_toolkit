@@ -45,6 +45,9 @@ public class ResponseActor {
                     out.println("Content-length: " + response.getHandleDataLegth());
                     out.println(); // blank line between headers and content, very important !
                     out.flush(); // flush character output stream buffer
+                    // file
+                    dataOut.write(response.getHandleData(), 0, response.getHandleDataLegth());
+                    dataOut.flush();
                     break;
                 case PUT:
                     out.println("HTTP/1.1 501 Not Implemented");

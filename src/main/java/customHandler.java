@@ -1,8 +1,10 @@
 import model.HTTPRequest;
+import model.HTTPResponse;
+import util.constants.Types;
 
 public class customHandler implements model.Handler {
     @Override
-    public byte[] handle(HTTPRequest request) {
+    public byte[] handle(HTTPRequest request, HTTPResponse response) {
         String retStr = "handler worked" ;
         byte[] retVal = null;
         if (request.getContent() != null) {
@@ -11,6 +13,7 @@ public class customHandler implements model.Handler {
         else {
             retVal = "".getBytes();
         }
+        response.setStatus(Types.STATUS.OK);
         return retVal;
     }
 }
