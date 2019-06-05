@@ -74,7 +74,7 @@ public class ResponseActor {
         }
         finally {
             if (serverConfig.DEBUG){
-                System.out.println("");
+                //System.out.println("");
                 System.out.print(" - Response File Lenth: " + response.getHandleDataLegth());
                 System.out.print(" - Response Status: " + response.getStatus() + "\n" );
             }

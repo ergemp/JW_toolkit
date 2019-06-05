@@ -81,8 +81,6 @@ public class Routes {
             if (serverConfig.DEBUG){
                 System.out.print(" - Selected Route -> ");
                 System.out.print(" - Route Request Path: "  + retRoute.getRequestPath() );
-                System.out.print(" - Route Response File: "  + retRoute.getResponseFile() );
-                System.out.print(" - Route Response File Size: "  + retRoute.getFileSize() + "\n" );
             }
 
             return retRoute;

@@ -105,11 +105,11 @@ public class HTTPRequestModelCreator {
         finally{
             if (config.serverConfig.DEBUG){
                 if (model.getMethod() != null) {
-                    System.out.println(" - Request Raw: " + clientRequestHeaderArr.toString());
+                    System.out.println(" - Thread ID: " + Thread.currentThread().getId() + " - Request Raw: " + clientRequestHeaderArr.toString());
                     System.out.print(" - Request Method: " + model.getMethod());
                     System.out.print(" - Request Path: " + model.getPath());
                     System.out.print(" - Request Host: " + model.getHost());
-                    System.out.print(" - Request HTTP Version: " + model.getHttpVersion() + "\n");
+                    System.out.print(" - Request HTTP Version: " + model.getHttpVersion() + "");
                     System.out.print(" - Request Content: " + model.getContent() + "\n");
                 }
             }
