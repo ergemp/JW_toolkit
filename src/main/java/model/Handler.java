@@ -1,7 +1,6 @@
 package model;
 
-import java.io.BufferedOutputStream;
-import java.io.PrintWriter;
+import util.constants.Types;
 
 public interface Handler {
     public byte[] handle(HTTPRequest request, HTTPResponse response);

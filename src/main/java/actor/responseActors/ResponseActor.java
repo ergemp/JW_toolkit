@@ -3,6 +3,8 @@ package actor.responseActors;
 import config.serverConfig;
 import model.HTTPRequest;
 import model.HTTPResponse;
+import model.defaultResponses.Response501;
+
 import java.io.*;
 import java.util.Date;
 
@@ -17,70 +19,54 @@ public class ResponseActor {
 
             switch (request.getMethod()){
                 case GET:
-                    out.println(response.getStatus());
-                    out.println(response.getServer());
-                    out.println(response.getDate());
-                    out.println(response.getContentType());
-                    out.println("Content-length: " + response.getHandleDataLegth());
-                    out.println(); // blank line between headers and content, very important !
-                    out.flush(); // flush character output stream buffer
-                    // file
-                    dataOut.write(response.getHandleData(), 0, response.getHandleDataLegth());
-                    dataOut.flush();
+                    writeHeader(out, response);
+                    writeData(dataOut,response);
                     break;
                 case HEAD:
-                    out.println(response.getStatus());
-                    out.println(response.getServer());
-                    out.println(response.getDate());
-                    out.println(response.getContentType());
-                    out.println("Content-length: " + response.getHandleDataLegth());
-                    out.println(); // blank line between headers and content, very important !
-                    out.flush(); // flush character output stream buffer
+                    writeHeader(out, response);
                     break;
                 case POST:
-                    out.println(response.getStatus());
-                    out.println(response.getServer());
-                    out.println(response.getDate());
-                    out.println(response.getContentType());
-                    out.println("Content-length: " + response.getHandleDataLegth());
-                    out.println(); // blank line between headers and content, very important !
-                    out.flush(); // flush character output stream buffer
-                    // file
-                    dataOut.write(response.getHandleData(), 0, response.getHandleDataLegth());
-                    dataOut.flush();
+                    writeHeader(out, response);
+                    writeData(dataOut,response);
                     break;
                 case PUT:
-                    out.println("HTTP/1.1 501 Not Implemented");
-                    out.println("Server: Simple Java Web Server 1.0");
-                    out.println("Date: " + new Date());
-                    out.println("Content-type: plain/text");
-                    out.println("Content-length: " + "0");
-                    out.println(); // blank line between headers and content, very important !
-                    out.flush(); // flush character output stream buffer
+                    writeHeader(out, new Response501());
                     break;
                 default:
-                    out.println("HTTP/1.1 501 Not Implemented");
-                    out.println("Server: Simple Java Web Server 1.0");
-                    out.println("Date: " + new Date());
-                    out.println("Content-type: plain/text");
-                    out.println("Content-length: " + "0");
-                    out.println(); // blank line between headers and content, very important !
-                    out.flush(); // flush character output stream buffer
+                    writeHeader(out, new Response501());
                     break;
             }
         }
         catch(FileNotFoundException fnfe){
             fnfe.printStackTrace();
         }
-        catch (IOException ioe){
+        catch (IOException ioe) {
             ioe.printStackTrace();
         }
-        finally {
+        catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             if (serverConfig.DEBUG){
                 //System.out.println("");
-                System.out.print(" - Response File Lenth: " + response.getHandleDataLegth());
+                System.out.print(" - Response File Lenth: " + response.getHandleDataLength());
                 System.out.print(" - Response Status: " + response.getStatus() + "\n" );
             }
         }
+    }
+
+    public static void writeHeader(PrintWriter out, HTTPResponse response) {
+        out.println(response.getStatus());
+        out.println(response.getServer());
+        out.println(response.getDate());
+        out.println(response.getContentType());
+        out.println("Content-length: " + response.getHandleDataLength());
+        out.println(); // blank line between headers and content, very important !
+        out.flush(); // flush character output stream buffer
+
+    }
+
+    public static void writeData(BufferedOutputStream dataOut, HTTPResponse response) throws Exception {
+            dataOut.write(response.getHandleData(), 0, response.getHandleDataLength());
+            dataOut.flush();
     }
 }

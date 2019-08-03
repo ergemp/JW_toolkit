@@ -1,6 +1,8 @@
 package model;
 
 import util.constants.Types;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HTTPRequest {
     private Types.METHOD method ;
@@ -15,6 +17,15 @@ public class HTTPRequest {
     private String acceptEncoding;
     private String acceptLanguage;
     private String content;
+    private Map<String, String> allHeaders = new HashMap<>();
+
+    public void addHeader(String gKey, String gValue){
+        allHeaders.put(gKey, gValue);
+    }
+
+    public Map<String, String> getHeader(String gKey, String gValue){
+        return allHeaders;
+    }
 
     public Types.METHOD getMethod() {
         return method;

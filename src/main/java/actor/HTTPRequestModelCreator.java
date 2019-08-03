@@ -12,11 +12,10 @@ import java.util.List;
 public class HTTPRequestModelCreator {
     HTTPRequest model = new HTTPRequest();
     List<String> clientRequestHeaderArr = new ArrayList();
-    List<String> clientRequestBodyArr = new ArrayList();
 
     public HTTPRequest createRequest(BufferedReader gIn, BufferedInputStream gDataIn) {
         this.prepareDataAsList(gIn);
-        this.createRequestHeader();
+        //this.createRequestHeader();
         return this.model;
     }
 
@@ -60,6 +59,7 @@ public class HTTPRequestModelCreator {
                 clientRequestHeaderArr.forEach(each -> {
 
                     if (each.split(":").length >= 2) {
+                        model.addHeader(each.split(":")[0].toLowerCase().trim(), each.split(":")[1].toLowerCase().trim());
                         switch (each.split(":")[0].toLowerCase().trim()) {
                             case "host":
                                 model.setHost(each.split(":")[1].toLowerCase().trim());

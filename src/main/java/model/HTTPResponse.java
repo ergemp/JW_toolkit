@@ -14,6 +14,8 @@ public class HTTPResponse {
     private Types.CONTENT content;
     private Types.STATUS status;
 
+    public HTTPResponse() { }
+
     public String getStatus() {
         return new StatusMapper().getStatus(status);
     }
@@ -28,13 +30,15 @@ public class HTTPResponse {
         content=gContent;
     }
 
+    public void setRoute(SingleRouteModel gRoute){ route = gRoute; }
+
     public String getServer() {
         return server;
     }
+    public void setServer(String gServer) { server = gServer; }
 
-    public String getDate() {
-        return date;
-    }
+    public String getDate() { return date; }
+    public void setDate (String gDate) { date = gDate; }
 
     public HTTPResponse(SingleRouteModel gRoute) {
         this.server = serverConfig.SERVERNAME;
@@ -54,7 +58,7 @@ public class HTTPResponse {
     }
 
     public void handle(HTTPRequest request){ route.handle(request, this);}
-    public Integer getHandleDataLegth(){ return route.getHandleDataLength();}
+    public Integer getHandleDataLength(){ return route.getHandleDataLength();}
     public byte[] getHandleData (){ return route.getHandleData();}
 
     public String getFileName() { return route.getResponseFile(); }
