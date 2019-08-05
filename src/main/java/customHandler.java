@@ -15,9 +15,12 @@ public class customHandler implements model.Handler {
         else {
             retVal = "".getBytes();
         }
-        response.setStatus(Types.STATUS.OK);
+
         if (request.getMethod() == Types.METHOD.PUT) {
             response.setStatus(Types.STATUS.NOT_IMPLEMENTED);
+        }
+        else {
+            response.setStatus(Types.STATUS.OK);
         }
         return retVal;
     }
