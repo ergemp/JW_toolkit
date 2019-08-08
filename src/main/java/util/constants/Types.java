@@ -1,9 +1,9 @@
 package util.constants;
 
 public class Types {
-    public static enum CONTENT { HTML, JSON, TEXT };
-    public static enum METHOD { GET, HEAD, POST, PUT };
-    public static enum STATUS { OK, INTERNAL_ERROR, NOT_FOUND, NOT_IMPLEMENTED, CREATED };
+    public static enum CONTENT_TYPE { HTML, JSON, TEXT };
+    public static enum REQUEST_METHOD { GET, HEAD, POST, PUT, DELETE, PATCH };
+    public static enum RESPONSE_STATUS { OK, INTERNAL_ERROR, NOT_FOUND, NOT_IMPLEMENTED, CREATED };
     /*
      *
      * OK - 200

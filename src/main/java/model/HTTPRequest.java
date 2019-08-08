@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HTTPRequest {
-    private Types.METHOD method ;
+    private Types.REQUEST_METHOD method ;
     private String path ;
     private String httpVersion ;
     private String host;
@@ -27,11 +27,11 @@ public class HTTPRequest {
         return allHeaders;
     }
 
-    public Types.METHOD getMethod() {
+    public Types.REQUEST_METHOD getMethod() {
         return method;
     }
 
-    public void setMethod(Types.METHOD method) {
+    public void setMethod(Types.REQUEST_METHOD method) {
         this.method = method;
     }
 

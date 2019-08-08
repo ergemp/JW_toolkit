@@ -1,13 +1,16 @@
+package example;
+
 import model.HTTPRequest;
 import model.HTTPResponse;
+import model.handlers.InterfaceHandler;
 import util.constants.Types;
 
-import java.io.File;
+public class CustomInterfaceHandler implements InterfaceHandler {
 
-public class customHandler implements model.Handler {
     @Override
     public byte[] handle(HTTPRequest request, HTTPResponse response) {
         //String retStr = "handler worked" ;
+
         byte[] retVal = null;
         if (request.getContent() != null) {
             retVal = request.getContent().getBytes();
@@ -16,12 +19,7 @@ public class customHandler implements model.Handler {
             retVal = "".getBytes();
         }
 
-        if (request.getMethod() == Types.METHOD.PUT) {
-            response.setStatus(Types.STATUS.NOT_IMPLEMENTED);
-        }
-        else {
-            response.setStatus(Types.STATUS.OK);
-        }
+        response.setStatus(Types.RESPONSE_STATUS.OK);
         return retVal;
     }
 }

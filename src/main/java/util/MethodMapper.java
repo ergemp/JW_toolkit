@@ -6,18 +6,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MethodMapper {
-    private Map<String, Types.METHOD> map;
+    private Map<String, Types.REQUEST_METHOD> map;
 
     public MethodMapper(){
         map = new HashMap<>();
-        map.put("GET", Types.METHOD.GET);
-        map.put("POST", Types.METHOD.POST);
-        map.put("HEAD", Types.METHOD.HEAD);
-        map.put("PUT", Types.METHOD.PUT);
+        map.put("GET", Types.REQUEST_METHOD.GET);
+        map.put("POST", Types.REQUEST_METHOD.POST);
+        map.put("HEAD", Types.REQUEST_METHOD.HEAD);
+        map.put("PUT", Types.REQUEST_METHOD.PUT);
     }
 
-    public Types.METHOD getMehod(String gMethod){
-        Types.METHOD retVal = map.getOrDefault(gMethod, Types.METHOD.GET);
+    public Types.REQUEST_METHOD getMehod(String gMethod){
+        Types.REQUEST_METHOD retVal = map.getOrDefault(gMethod, Types.REQUEST_METHOD.GET);
         return retVal;
     }
 }

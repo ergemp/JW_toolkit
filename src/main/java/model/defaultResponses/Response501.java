@@ -9,8 +9,8 @@ import java.util.Date;
 
 public class Response501 extends HTTPResponse {
     public Response501(){
-        setContent(Types.CONTENT.TEXT);
-        setStatus(Types.STATUS.NOT_IMPLEMENTED);
+        setContent(Types.CONTENT_TYPE.TEXT);
+        setStatus(Types.RESPONSE_STATUS.NOT_IMPLEMENTED);
         setDate(new Date().toString());
         setServer(serverConfig.SERVERNAME);
         setRoute(new Route501());

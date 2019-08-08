@@ -11,22 +11,22 @@ public class HTTPResponse {
     private String server;
     private String date;
     private SingleRouteModel route;
-    private Types.CONTENT content;
-    private Types.STATUS status;
+    private Types.CONTENT_TYPE content;
+    private Types.RESPONSE_STATUS status;
 
     public HTTPResponse() { }
 
     public String getStatus() {
         return new StatusMapper().getStatus(status);
     }
-    public void setStatus(Types.STATUS gStatus) {
+    public void setStatus(Types.RESPONSE_STATUS gStatus) {
         status=gStatus;
     }
 
     public String getContentType() {
         return new ContentMapper().getContent(content);
     }
-    public void setContent(Types.CONTENT gContent) {
+    public void setContent(Types.CONTENT_TYPE gContent) {
         content=gContent;
     }
 
@@ -44,11 +44,11 @@ public class HTTPResponse {
         this.server = serverConfig.SERVERNAME;
         this.date = "Date: " + new Date();
         this.route = gRoute;
-        this.content = Types.CONTENT.HTML;
-        this.status = Types.STATUS.OK;
+        this.content = Types.CONTENT_TYPE.HTML;
+        this.status = Types.RESPONSE_STATUS.OK;
     }
 
-    public HTTPResponse(Types.STATUS gStatus, Types.CONTENT gContent, SingleRouteModel gRoute) {
+    public HTTPResponse(Types.RESPONSE_STATUS gStatus, Types.CONTENT_TYPE gContent, SingleRouteModel gRoute) {
         this.status = gStatus;
         this.content = gContent;
         this.content = gContent;
@@ -60,8 +60,5 @@ public class HTTPResponse {
     public void handle(HTTPRequest request){ route.handle(request, this);}
     public Integer getHandleDataLength(){ return route.getHandleDataLength();}
     public byte[] getHandleData (){ return route.getHandleData();}
-
-    public String getFileName() { return route.getResponseFile(); }
-    public String getHandlerClassName() { return route.getResponseClass().getClass().getName(); }
 }
 

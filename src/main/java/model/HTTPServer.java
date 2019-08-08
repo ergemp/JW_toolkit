@@ -3,9 +3,6 @@ package model;
 import actor.HTTPRequestModelCreator;
 import actor.responseActors.ResponseActor;
 import config.serverConfig;
-import model.defaultRoutes.Route500;
-import model.defaultRoutes.Route501;
-import util.constants.Types;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -55,7 +52,6 @@ public class HTTPServer implements Runnable {
 
     @Override
     public void run() {
-        // we manage our particular client connection
         BufferedReader in = null;
         PrintWriter out = null;
         BufferedOutputStream dataOut = null;
@@ -66,16 +62,16 @@ public class HTTPServer implements Runnable {
             if (serverConfig.DEBUG){
                 System.out.println(" - Request Handler Thread Started: " + Thread.currentThread().getId());
             }
-            // we read characters from the client via input stream on the socket
+            // read characters from the client via input stream on the socket
             in = new BufferedReader(new InputStreamReader(connect.getInputStream()));
 
-            // we read characters from the client via input stream on the socket
+            // read characters from the client via input stream on the socket
             dataIn = new BufferedInputStream(connect.getInputStream());
 
-            // we get character output stream to client (for headers)
+            // get character output stream to client (for headers)
             out = new PrintWriter(connect.getOutputStream());
 
-            // get binary output stream to client (for requested data)
+            // binary output stream to client (for requested data)
             dataOut = new BufferedOutputStream(connect.getOutputStream());
 
             //create the requestModel

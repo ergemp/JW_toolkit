@@ -1,3 +1,5 @@
+package example;
+
 import actor.RoutesFactory;
 import model.HTTPServer;
 import model.Routes;
@@ -8,7 +10,7 @@ public class JavaHTTPServer {
         RoutesFactory routesFactory = new RoutesFactory();
         Routes routes = routesFactory.getPredefinedRoutes();
 
-        routes.addRoute("/handler" , new customHandler());
+        routes.addRoute("/handler" , new CustomInterfaceHandler());
 
         HTTPServer httpServer = new HTTPServer(routes);
         httpServer.start();

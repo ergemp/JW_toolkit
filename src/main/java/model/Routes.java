@@ -2,7 +2,7 @@ package model;
 
 import config.serverConfig;
 import model.defaultRoutes.Route404;
-import util.constants.Types;
+import model.handlers.InterfaceHandler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,10 +22,10 @@ public class Routes {
         this.routes.add(route);
     }
 
-    public void addRoute(String path, Handler gHandler){
+    public void addRoute(String path, InterfaceHandler gHandler){
         SingleRouteModel route = new SingleRouteModel();
         route.setRequestPath(path);
-        route.setResponseClass(gHandler);
+        route.setInterfaceResponseClass(gHandler);
         this.routes.add(route);
     }
 

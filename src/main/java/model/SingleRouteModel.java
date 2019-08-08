@@ -1,13 +1,18 @@
 package model;
 
 import config.serverConfig;
+import model.handlers.AbstractHandler;
+import model.handlers.InterfaceHandler;
+import model.handlers.SimpleHandler;
 import util.ReadFileData;
 import java.io.File;
 
 public class SingleRouteModel {
     private String requestPath;
     private String responseFile;
-    private Handler responseClass;
+    private InterfaceHandler interfaceResponseClass;
+    private AbstractHandler abstractResponseClass;
+    private SimpleHandler simpleResponseClass;
 
     private byte[] handleData;
     private Integer handleDataLength;
@@ -64,8 +69,12 @@ public class SingleRouteModel {
 
     public void handle(HTTPRequest request, HTTPResponse response){
         try{
-            if (responseClass != null) {
-                setHandleData(responseClass.handle(request, response));
+            if (interfaceResponseClass != null) {
+                setHandleData(interfaceResponseClass.handle(request, response));
+                setHandleDataLength(getHandleData().length);
+            }
+            else if (abstractResponseClass != null) {
+                setHandleData(abstractResponseClass.handle(request, response));
                 setHandleDataLength(getHandleData().length);
             }
             else if (responseFile != null) {
@@ -85,13 +94,17 @@ public class SingleRouteModel {
         }
     }
 
-    public Handler getResponseClass() {
-        return responseClass;
+    public InterfaceHandler getInterfaceResponseClass() {
+        return interfaceResponseClass;
+    }
+    public void setInterfaceResponseClass(InterfaceHandler responseClass) {
+        this.interfaceResponseClass = responseClass;
     }
 
-    public void setResponseClass(Handler responseClass) {
-        this.responseClass = responseClass;
+    public AbstractHandler getAbstractResponseClass() {
+        return abstractResponseClass;
     }
+    public void setAbstractResponseClass(AbstractHandler responseClass) { this.abstractResponseClass = responseClass; }
 
     public byte[] getHandleData() {
         return handleData;

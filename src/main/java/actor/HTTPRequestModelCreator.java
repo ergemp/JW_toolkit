@@ -34,14 +34,19 @@ public class HTTPRequestModelCreator {
             createRequestHeader();
 
             if (model.getMethod() != null) {
+
+                //20190808: ergemp: I think, we shouldnt control the body loader on request type
+                /*
                 if (!(model.getMethod().equals(Types.METHOD.GET) ||
-                        model.getMethod().equals(Types.METHOD.HEAD))) {
-                    StringBuilder payload = new StringBuilder();
-                    while (gIn.ready()) {
-                        payload.append((char) gIn.read());
-                    }
-                    model.setContent(payload.toString());
+                      model.getMethod().equals(Types.METHOD.HEAD) ||
+                      model.getMethod().equals(Types.METHOD.DELETE))) {
+                */
+                StringBuilder payload = new StringBuilder();
+                while (gIn.ready()) {
+                    payload.append((char) gIn.read());
                 }
+                model.setContent(payload.toString());
+                //}
             }
         }
         catch(Exception ex) {
@@ -51,7 +56,6 @@ public class HTTPRequestModelCreator {
 
         }
     }
-
 
     public  void createRequestHeader(){
         try {
