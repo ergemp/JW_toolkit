@@ -77,6 +77,10 @@ public class SingleRouteModel {
                 setHandleData(abstractResponseClass.handle(request, response));
                 setHandleDataLength(getHandleData().length);
             }
+            else if (simpleResponseClass != null) {
+                setHandleData(simpleResponseClass.handle(request, response));
+                setHandleDataLength(getHandleData().length);
+            }
             else if (responseFile != null) {
                 File tmpFile = new File(serverConfig.RESOURCES, this.getResponseFile());
                 setHandleDataLength((int) tmpFile.length());
@@ -97,19 +101,21 @@ public class SingleRouteModel {
     public InterfaceHandler getInterfaceResponseClass() {
         return interfaceResponseClass;
     }
-    public void setInterfaceResponseClass(InterfaceHandler responseClass) {
-        this.interfaceResponseClass = responseClass;
-    }
+    public void setInterfaceResponseClass(InterfaceHandler responseClass) { this.interfaceResponseClass = responseClass; }
 
     public AbstractHandler getAbstractResponseClass() {
         return abstractResponseClass;
     }
     public void setAbstractResponseClass(AbstractHandler responseClass) { this.abstractResponseClass = responseClass; }
 
+    public SimpleHandler getSimpleResponseClass() {
+        return simpleResponseClass;
+    }
+    public void setSimpleResponseClass(SimpleHandler responseClass) { this.simpleResponseClass = responseClass; }
+
     public byte[] getHandleData() {
         return handleData;
     }
-
     public void setHandleData(byte[] handleData) {
         this.handleData = handleData;
     }
@@ -117,7 +123,6 @@ public class SingleRouteModel {
     public Integer getHandleDataLength() {
         return handleDataLength;
     }
-
     public void setHandleDataLength(Integer handleDataLength) {
         this.handleDataLength = handleDataLength;
     }

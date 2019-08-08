@@ -2,6 +2,7 @@ package model;
 
 import config.serverConfig;
 import model.defaultRoutes.Route404;
+import model.handlers.AbstractHandler;
 import model.handlers.InterfaceHandler;
 
 import java.util.ArrayList;
@@ -15,17 +16,17 @@ public class Routes {
         this.routes.add(route);
     }
 
-    public void addRoute(String path, String file){
-        SingleRouteModel route = new SingleRouteModel();
-        route.setRequestPath(path);
-        route.setResponseFile(file);
-        this.routes.add(route);
-    }
-
     public void addRoute(String path, InterfaceHandler gHandler){
         SingleRouteModel route = new SingleRouteModel();
         route.setRequestPath(path);
         route.setInterfaceResponseClass(gHandler);
+        this.routes.add(route);
+    }
+
+    public void addRoute(String path, AbstractHandler gHandler){
+        SingleRouteModel route = new SingleRouteModel();
+        route.setRequestPath(path);
+        route.setAbstractResponseClass(gHandler);
         this.routes.add(route);
     }
 
