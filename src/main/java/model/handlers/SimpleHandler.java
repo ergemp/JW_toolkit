@@ -7,9 +7,16 @@ import util.ReadFileData;
 
 import java.io.File;
 
-public class SimpleHandler implements InterfaceHandler{
+public class SimpleHandler implements InterfaceHandler {
 
-    String responseFileName;
+    private String responseFileName;
+
+    public String getResponseFileName() {
+        return responseFileName;
+    }
+    public void setResponseFileName(String gResponseFileName) {
+        responseFileName=gResponseFileName ;
+    }
 
     public SimpleHandler(String gFile){
         this.responseFileName = gFile;
@@ -41,11 +48,32 @@ public class SimpleHandler implements InterfaceHandler{
             File file = new File(serverConfig.RESOURCES, responseFileName);
             retVal = (int) file.length();
         }
-        catch(Exception ex){
+        catch(Exception ex) {
             retVal = 0;
         }
         finally {
             return retVal;
         }
     }
+
+    public byte[] getFileData(){
+
+        byte[] retVal = null;
+
+        try {
+            if (responseFileName != null) {
+                retVal = ReadFileData.read(new File(serverConfig.RESOURCES, this.getResponseFileName()), getFileSize());
+            }
+            else {
+                retVal = "no data".getBytes();
+            }
+        }
+        catch(Exception ex) {
+
+        }
+        finally {
+            return retVal;
+        }
+    }
+
 }

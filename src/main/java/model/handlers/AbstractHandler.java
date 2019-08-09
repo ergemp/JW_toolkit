@@ -2,6 +2,7 @@ package model.handlers;
 
 import model.HTTPRequest;
 import model.HTTPResponse;
+import util.constants.Types;
 
 public abstract class AbstractHandler {
 
@@ -25,28 +26,32 @@ public abstract class AbstractHandler {
     };
 
     public byte[] handleGET(HTTPRequest request, HTTPResponse response){
-        return "not handled".getBytes();
-    };
+        response.setStatus(Types.RESPONSE_STATUS.NOT_IMPLEMENTED);
+        return "not implemented".getBytes();
+    }
 
     public byte[] handleHEAD(HTTPRequest request, HTTPResponse response){
-        return "not handled".getBytes();
-    };
+        response.setStatus(Types.RESPONSE_STATUS.NOT_IMPLEMENTED);
+        return "not implemented".getBytes();
+    }
 
     public byte[] handlePOST(HTTPRequest request, HTTPResponse response){
-        return "not handled".getBytes();
-    };
+        response.setStatus(Types.RESPONSE_STATUS.NOT_IMPLEMENTED);
+        return "not implemented".getBytes();
+    }
 
     public byte[] handlePUT(HTTPRequest request, HTTPResponse response){
-        return "not handled".getBytes();
-    };
+        response.setStatus(Types.RESPONSE_STATUS.NOT_IMPLEMENTED);
+        return "not implemented".getBytes();
+    }
 
     public byte[] handleDELETE(HTTPRequest request, HTTPResponse response){
-        return "not handled".getBytes();
-    };
+        response.setStatus(Types.RESPONSE_STATUS.NOT_IMPLEMENTED);
+        return "not implemented".getBytes();
+    }
 
     public byte[] handlePATCH(HTTPRequest request, HTTPResponse response){
-        return "not handled".getBytes();
-    };
-
-
+        response.setStatus(Types.RESPONSE_STATUS.NOT_IMPLEMENTED);
+        return "not implemented".getBytes();
+    }
 }

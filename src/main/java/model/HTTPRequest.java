@@ -11,7 +11,6 @@ public class HTTPRequest {
     private String host;
     private String connection;
     private String cacheControl;
-    private String upgradeInsecureRequests;
     private String userAgent;
     private String accept;
     private String acceptEncoding;
@@ -59,14 +58,6 @@ public class HTTPRequest {
         this.cacheControl = cacheControl;
     }
 
-    public String getUpgradeInsecureRequests() {
-        return upgradeInsecureRequests;
-    }
-
-    public void setUpgradeInsecureRequests(String upgradeInsecureRequests) {
-        this.upgradeInsecureRequests = upgradeInsecureRequests;
-    }
-
     public String getUserAgent() {
         return userAgent;
     }
@@ -105,7 +96,6 @@ public class HTTPRequest {
             host + ", " +
             connection + ", " +
             cacheControl + ", " +
-            upgradeInsecureRequests + ", " +
             userAgent + ", " +
             accept + ", " +
             acceptEncoding + ", " +

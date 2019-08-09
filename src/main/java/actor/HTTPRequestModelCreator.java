@@ -35,7 +35,7 @@ public class HTTPRequestModelCreator {
 
             if (model.getMethod() != null) {
 
-                //20190808: ergemp: I think, we shouldnt control the body loader on request type
+                //20190808: ergemp: I think, shouldnt control the body loader on request type
                 /*
                 if (!(model.getMethod().equals(Types.METHOD.GET) ||
                       model.getMethod().equals(Types.METHOD.HEAD) ||
@@ -74,9 +74,6 @@ public class HTTPRequestModelCreator {
                             case "cache-control":
                                 model.setCacheControl(each.split(":")[1].toLowerCase().trim());
                                 break;
-                            case "upgrade-insecure-requests":
-                                model.setUpgradeInsecureRequests(each.split(":")[1].toLowerCase().trim());
-                                break;
                             case "user-agent":
                                 model.setUserAgent(each.split(":")[1].toLowerCase().trim());
                                 break;
@@ -114,7 +111,6 @@ public class HTTPRequestModelCreator {
                     System.out.print(" - Request Path: " + model.getPath());
                     System.out.print(" - Request Host: " + model.getHost());
                     System.out.print(" - Request HTTP Version: " + model.getHttpVersion() + "");
-                    System.out.print(" - Request Content: " + model.getContent() + "\n");
                 }
             }
         }

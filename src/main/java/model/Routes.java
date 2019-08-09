@@ -80,8 +80,7 @@ public class Routes {
             }
 
             if (serverConfig.DEBUG){
-                System.out.print(" - Selected Route -> ");
-                System.out.print(" - Route Request Path: "  + retRoute.getRequestPath() );
+                System.out.print(" - Selected Route -> " + retRoute.getRequestPath());
             }
 
             return retRoute;
