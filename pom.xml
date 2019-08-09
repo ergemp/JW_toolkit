@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>javaweb_toolkit</groupId>
-    <artifactId>javaweb_toolkit</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>org.ergemp.jwt</groupId>
+    <artifactId>JWtoolkit</artifactId>
+    <version>201908</version>
 
 
     <build>
@@ -21,7 +21,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>example.JavaHTTPServer</mainClass>
+                            <mainClass>org.ergemp.jwt.example.JavaHTTPServer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
