@@ -1,9 +1,9 @@
 package org.ergemp.jwt.example;
 
-        import org.ergemp.jwt.actor.RoutesFactory;
-        import org.ergemp.jwt.model.HTTPServer;
-        import org.ergemp.jwt.model.Routes;
-        import org.ergemp.jwt.model.handlers.SimpleHandler;
+import org.ergemp.jwt.actor.RoutesFactory;
+import org.ergemp.jwt.model.HTTPServer;
+import org.ergemp.jwt.model.Routes;
+import org.ergemp.jwt.model.handlers.SimpleHandler;
 
 public class JavaHTTPServer {
     public static void main(String[] args) {

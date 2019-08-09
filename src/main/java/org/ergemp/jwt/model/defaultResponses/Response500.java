@@ -4,7 +4,6 @@ import org.ergemp.jwt.config.serverConfig;
 import org.ergemp.jwt.model.HTTPResponse;
 import org.ergemp.jwt.model.defaultRoutes.Route500;
 import org.ergemp.jwt.util.constants.Types;
-import model.defaultRoutes.*;
 
 import java.util.Date;
 
