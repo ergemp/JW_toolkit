@@ -8,7 +8,6 @@
     <artifactId>JWtoolkit</artifactId>
     <version>201908</version>
 
-
     <build>
         <plugins>
             <plugin>
@@ -21,7 +20,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>org.ergemp.jwt.example.JavaHTTPServer</mainClass>
+                            <mainClass>org.ergemp.jwt</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

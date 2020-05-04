@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="javaweb_toolkit" />
         <module name="JW_toolkit" />
+        <module name="javaweb_toolkit" />
       </profile>
     </annotationProcessing>
   </component>
