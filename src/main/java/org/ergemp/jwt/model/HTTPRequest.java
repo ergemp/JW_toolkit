@@ -107,7 +107,14 @@ public class HTTPRequest {
     public void setParams(String gParams) {
         for (String param : gParams.split("&")) {
             try {
-                params.put(param.split("=")[0], param.split("=")[1]);
+                if (param.split("=").length == 2) {
+                    params.put(param.split("=")[0], param.split("=")[1]);
+                }
+                else if (param.split("=").length == 1){
+                    params.put(param.split("=")[0], null);
+                }
+                else {
+                }
             }
             catch(Exception ex){
             }
