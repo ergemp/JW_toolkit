@@ -29,8 +29,9 @@ public class ListFiles implements InterfaceHandler {
         try {
             sVal += "<html><body>" ;
             sVal += "<table border='1' width='60%'>";
+            sVal += "<caption>File Browser</caption> ";
 
-            sVal += "<th></th><th>Last Modified</th><th>File Name</th>" ;
+            sVal += "<tr><th></th><th>Last Modified</th><th>File Name</th></tr>" ;
             //display folders first
             for (File file :rootFile.listFiles() ) {
                 if (file.isFile()) {
