@@ -18,6 +18,7 @@ public class HTTPRequest {
     private String acceptLanguage;
     private String content;
     private Map<String, String> allHeaders = new HashMap<>();
+    private Map<String, String> params = new HashMap<>();
 
     public void addHeader(String gKey, String gValue){
         allHeaders.put(gKey, gValue);
@@ -103,12 +104,32 @@ public class HTTPRequest {
             acceptLanguage;
     }
 
-    public String getPath() {
-        return path;
+    public void setParams(String gParams) {
+        for (String param : gParams.split("&")) {
+            try {
+                params.put(param.split("=")[0], param.split("=")[1]);
+            }
+            catch(Exception ex){
+            }
+        }
+    }
+
+    public Map<String,String> getParams() {
+        return params;
     }
 
     public void setPath(String path) {
-        this.path = path;
+        if (path.indexOf("?") > 0) {
+            this.path = path.substring(0,path.indexOf("?"));
+            setParams(path.substring(path.indexOf("?") + 1));
+        }
+        else {
+            this.path = path;
+        }
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public String getHttpVersion() {

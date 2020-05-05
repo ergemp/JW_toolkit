@@ -15,7 +15,7 @@ public class SimpleHandler implements InterfaceHandler {
         return responseFileName;
     }
     public void setResponseFileName(String gResponseFileName) {
-        responseFileName=gResponseFileName ;
+        responseFileName = gResponseFileName ;
     }
 
     public SimpleHandler(String gFile){
